@@ -32,7 +32,8 @@
 	"homepage": "https://github.com/huskiesio/bot#readme",
 	"dependencies": {
 		"@element-ts/krypton": "latest",
-		"@command-socket/node-client": "latest"
+		"@command-socket/node-client": "latest",
+		"@huskiesio/types": "latest"
 	},
 	"devDependencies": {
 		"@types/node": "latest",

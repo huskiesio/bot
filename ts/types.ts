@@ -98,7 +98,7 @@ export interface IHCBotCryptoKeyPair {
 }
 
 export interface IHCBotCrypto {
-	keys: {
+	keys: () => {
 		user: () => IHCBotCryptoKeyPair;
 		device: () => IHCBotCryptoKeyPair;
 	};

@@ -4,10 +4,16 @@
  * elijahcobb.com
  * github.com/elijahjcobb
  */
-import {IHCBotCrypto} from "../types";
+import {IHCBotCrypto, IHCBotCryptoKeyPair} from "../types";
+
+export interface IHCBotCryptoKeys {
+	user: () => IHCBotCryptoKeyPair;
+	device: () => IHCBotCryptoKeyPair;
+}
 
 export class HCBotCrypto implements IHCBotCrypto {
-	decrypt: (data: Buffer) => Promise<Buffer>;
-	encrypt: (data: Buffer, user: IIHCBotUser) => Promise<Buffer>;
-	keys: { user: IHCBotCryptoKeyPair; device: IHCBotCryptoKeyPair };
+
+	public decrypt(data: Buffer): Promise<Buffer> {}
+	public encrypt(data: Buffer, user: IIHCBotUser): Promise<Buffer> {}
+	public keys(): IHCBotCryptoKeys {}
 }
