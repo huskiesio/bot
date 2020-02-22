@@ -5,6 +5,28 @@
  * github.com/elijahjcobb
  */
 
-import {HCBot} from "./index";
+import {HuskyChatBot} from "./index";
+import {IHCBotMessage} from "./types";
 
-const bot: HCBot = {} as HCBot;
+(async (): Promise<void> => {
+
+	const bot: HuskyChatBot = await HuskyChatBot.signIn("", "");
+
+	await bot.chat().onReceived(async(message: IHCBotMessage): Promise<void> => {
+
+
+
+	});
+
+	await bot.chat().onSent(async(message: IHCBotMessage): Promise<void> => {
+
+
+
+	});
+
+	await bot.chat().threads();
+
+	await bot.chat().send("", "");
+
+
+})();

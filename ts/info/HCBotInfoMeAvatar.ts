@@ -1,4 +1,4 @@
-import {IIHCBotGetterSetter} from "../types";
+import {IHCBotGetterSetter} from "../types";
 
 /**
  * Elijah Cobb
@@ -7,7 +7,7 @@ import {IIHCBotGetterSetter} from "../types";
  * github.com/elijahjcobb
  */
  
-export class HCBotInfoMeAvatar implements IIHCBotGetterSetter<Buffer> {
+export class HCBotInfoMeAvatar implements IHCBotGetterSetter<Buffer> {
 
 	public async get(): Promise<Buffer> {
 

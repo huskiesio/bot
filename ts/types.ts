@@ -20,12 +20,12 @@ export interface IIHCBotUser extends ISiObject{
 	publicKey: () => Buffer;
 }
 
-export interface IIHCBotThread extends ISiObject{
+export interface IHCBotThread extends ISiObject{
 	name: () => string;
 	description: () => string;
 }
 
-export interface IIHCBotGetterSetter<T> {
+export interface IHCBotGetterSetter<T> {
 	get: () => Promise<T>;
 	set: (value: T) => Promise<void>;
 }
@@ -35,7 +35,7 @@ export interface IHCBotInfoMe {
 	userId: () => string;
 	firstName: () => string;
 	lastName: () => string;
-	avatar: () => IIHCBotGetterSetter<Buffer>;
+	avatar: () => IHCBotGetterSetter<Buffer>;
 }
 
 export interface IHCBotInfoServer {
@@ -52,16 +52,12 @@ export interface IHCBotInfo {
 export interface IHCBotMessage {
 	timestamp: () => number;
 	sender: () => IIHCBotUser;
-	thread: () => IIHCBotThread;
+	thread: () => IHCBotThread;
 	payload: () => string;
 }
 
 export type IHCBotChatOnMessageHandler = (message: IHCBotMessage) => Promise<void>;
 
-export interface IHCBotChatOnMessage {
-	received: IHCBotChatOnMessageHandler;
-	sent: IHCBotChatOnMessageHandler;
-}
 
 export type IHCBotChatHistoryReturnType = Promise<IHCBotMessage[]>;
 
@@ -73,9 +69,11 @@ export interface IHCBotChatHistory {
 }
 
 export interface IHCBotChat {
-	onMessage: IHCBotChatOnMessage;
-	send: (thread: string | IIHCBotThread, payload: string) => Promise<string>;
-	history: IHCBotChatHistory;
+	onReceived: (handler: IHCBotChatOnMessageHandler) => void;
+	onSent: (handler: IHCBotChatOnMessageHandler) => void;
+	send: (thread: string | IHCBotThread, payload: string) => Promise<string>;
+	history: () => IHCBotChatHistory;
+	threads: () => Promise<IHCBotThread[]>;
 }
 
 export interface IHCBotDirectoryUser {
@@ -93,8 +91,8 @@ export interface IHCBotDirectory {
 }
 
 export interface IHCBotCryptoKeyPair {
-	public: () => string;
-	private: () => string;
+	public: () => Buffer;
+	private: () => Buffer;
 }
 
 export interface IHCBotCrypto {

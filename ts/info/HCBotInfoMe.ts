@@ -13,7 +13,7 @@ export class HCBotInfoMe implements IHCBotInfoMe {
 	private readonly _lastName: string;
 	private readonly _userId: string;
 	private readonly _username: string;
-	public readonly _avatar: HCBotInfoMeAvatar;
+	private readonly _avatar: HCBotInfoMeAvatar;
 
 	public constructor() {
 

@@ -1,1 +1,1 @@
-export {HuskyChatBot} from "./HuskyChatBot";
+export * from "./HuskyChatBot";

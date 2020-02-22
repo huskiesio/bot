@@ -32,4 +32,6 @@ export class HuskyChatBot implements IHCBot {
 	public directory(): HCBotDirectory { return this._directory; }
 	public info(): HCBotInfo { return this._info; }
 
+	public static async signIn(username: string, password: string): Promise<HuskyChatBot> { return new HuskyChatBot(); }
+
 }
