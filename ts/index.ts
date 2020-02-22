@@ -96,8 +96,6 @@ export interface HCBotDirectory {
 	getUser: (username: string) => Promise<HCBotUser | HCBotDirectoryUser | undefined>;
 }
 
-
-
 export interface HCBotCryptoKeyPair {
 	public: () => string;
 	private: () => string;
