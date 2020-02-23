@@ -20,5 +20,8 @@ export class HCBotDirectoryContact implements IHCAPICurried<IHCAPIDirectoryConta
 	public firstName(): string { return this.contact.firstName; }
 	public lastName(): string { return this.contact.lastName; }
 	public username(): string { return this.contact.username; }
+	public id(): string { return ""; }
+	public updatedAt(): number { return 0; }
+	public createdAt(): number { return 0; }
 
 }

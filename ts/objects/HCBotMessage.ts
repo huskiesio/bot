@@ -23,5 +23,8 @@ export class HCBotMessage implements IHCAPICurried<IHCAPIMessage> {
 	public payload(): Buffer { return this._payload; }
 	public senderId(): string { return this._senderId; }
 	public threadId(): string { return this._threadId; }
+	public id(): string { return ""; }
+	public updatedAt(): number { return 0; }
+	public createdAt(): number { return 0; }
 
 }

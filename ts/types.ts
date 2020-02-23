@@ -12,7 +12,7 @@ export interface ISiObject {
 	createdAt: number;
 }
 
-export interface IIHCBotUser extends ISiObject{
+export interface IHCBotUser extends ISiObject{
 	firstName: () => string;
 	lastName: () => string;
 	username: () => string;
@@ -51,7 +51,7 @@ export interface IHCBotInfo {
 
 export interface IHCBotMessage {
 	timestamp: () => number;
-	sender: () => IIHCBotUser;
+	sender: () => IHCBotUser;
 	thread: () => IHCBotThread;
 	payload: () => string;
 }
@@ -86,8 +86,8 @@ export type IHCBotDirectoryReturnType = Promise<IHCBotDirectoryUser[]>;
 
 export interface IHCBotDirectory {
 	query: (query: string) => IHCBotDirectoryReturnType;
-	friends: () => Promise<IIHCBotUser[]>;
-	getUser: (username: string) => Promise<IIHCBotUser | IHCBotDirectoryUser | undefined>;
+	friends: () => Promise<IHCBotUser[]>;
+	getUser: (username: string) => Promise<IHCBotUser | IHCBotDirectoryUser | undefined>;
 }
 
 export interface IHCBotCryptoKeyPair {
@@ -100,7 +100,7 @@ export interface IHCBotCrypto {
 		user: () => IHCBotCryptoKeyPair;
 		device: () => IHCBotCryptoKeyPair;
 	};
-	encrypt: (data: Buffer, user: IIHCBotUser) => Promise<Buffer>;
+	encrypt: (data: Buffer, user: IHCBotUser) => Promise<Buffer>;
 	decrypt: (data: Buffer) => Promise<Buffer>;
 }
 

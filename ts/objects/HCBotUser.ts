@@ -29,5 +29,8 @@ export class HCBotUser implements IHCAPICurried<IHCAPIUser> {
 	public username(): string { return this._username; }
 	public userId(): string { return this._userId; }
 	public publicKey(): Buffer { return this._publicKey; }
+	public id(): string { return ""; }
+	public updatedAt(): number { return 0; }
+	public createdAt(): number { return 0; }
 
 }

@@ -4,8 +4,8 @@
  * elijahcobb.com
  * github.com/elijahjcobb
  */
+
 import {IHCBotChat, IHCBotChatHistory, IHCBotChatOnMessageHandler, IHCBotThread} from "../types";
-import {IHCThread} from "@huskiesio/types";
 
 export class HCBotChat implements IHCBotChat {
 

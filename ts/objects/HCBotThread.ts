@@ -25,5 +25,8 @@ export class HCBotThread implements IHCAPICurried<IHCAPIThread> {
 	public description(): string { return this._description; }
 	public memberIds(): string[] { return this._memberIds; }
 	public members(): HCBotUser[] { return []; }
+	public id(): string { return ""; }
+	public updatedAt(): number { return 0; }
+	public createdAt(): number { return 0; }
 
 }

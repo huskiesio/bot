@@ -1,6 +1,6 @@
 {
 	"name": "@huskiesio/bot",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "A package to build a bot for the huskies.io chat application.",
 	"keywords": [],
 	"main": "js/index",
@@ -31,9 +31,9 @@
 	},
 	"homepage": "https://github.com/huskiesio/bot#readme",
 	"dependencies": {
-		"@command-socket/node-client": "^0.2.0",
-		"@element-ts/krypton": "^0.2.2",
-		"@huskiesio/types": "^0.1.4"
+		"@command-socket/node-client": "latest",
+		"@element-ts/krypton": "latest",
+		"@huskiesio/types": "latest"
 	},
 	"devDependencies": {
 		"@types/node": "latest",
