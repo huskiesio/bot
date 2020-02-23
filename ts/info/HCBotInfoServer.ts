@@ -5,6 +5,7 @@
  * github.com/elijahjcobb
  */
 import {IHCBotInfoServer} from "../types";
+import {Socket} from "../HuskyChatBot";
 
 export class HCBotInfoServer implements IHCBotInfoServer {
 
@@ -12,7 +13,7 @@ export class HCBotInfoServer implements IHCBotInfoServer {
 	private readonly _ip: string;
 
 
-	public constructor() {
+	public constructor(socket: Socket) {
 
 		this._domain = "";
 		this._ip = "";

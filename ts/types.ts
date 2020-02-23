@@ -4,6 +4,7 @@
  * elijahcobb.com
  * github.com/elijahjcobb
  */
+import {Socket} from "./HuskyChatBot";
 
 
 export interface ISiObject {

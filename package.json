@@ -1,45 +1,47 @@
 {
-	"name": "@huskiesio/bot",
-	"version": "0.2.0",
-	"description": "A package to build a bot for the huskies.io chat application.",
-	"keywords": [],
-	"main": "js/index",
-	"types": "dts/index",
-	"files": [
-		"js",
-		"dts"
-	],
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"prepublishOnly": "npm run compile",
-		"compile": "npm run clean && /usr/local/bin/tsc -p tsconfig.json",
-		"watch": "tsc -w -p .",
-		"clean": "rm -rf js && rm -rf dts",
-		"start": "node js/index.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/huskiesio/bot.git"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"author": "Elijah Cobb <elijah@elijahcobb.com> (https://elijahcobb.com/)",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/huskiesio/bot/issues"
-	},
-	"homepage": "https://github.com/huskiesio/bot#readme",
-	"dependencies": {
-		"@command-socket/node-client": "latest",
-		"@element-ts/krypton": "latest",
-		"@huskiesio/types": "latest"
-	},
-	"devDependencies": {
-		"@types/node": "latest",
-		"typescript": "latest",
-		"tslint": "latest",
-		"jest": "latest",
-		"@types/jest": "latest"
-	}
+  "name": "@huskiesio/bot",
+  "version": "0.2.2",
+  "description": "A package to build a bot for the huskies.io chat application.",
+  "keywords": [],
+  "main": "js/index",
+  "types": "dts/index",
+  "files": [
+    "js",
+    "dts"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run compile",
+    "compile": "npm run clean && /usr/local/bin/tsc -p tsconfig.json",
+    "watch": "tsc -w -p .",
+    "clean": "rm -rf js && rm -rf dts",
+    "start": "node js/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huskiesio/bot.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Elijah Cobb <elijah@elijahcobb.com> (https://elijahcobb.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/huskiesio/bot/issues"
+  },
+  "homepage": "https://github.com/huskiesio/bot#readme",
+  "dependencies": {
+    "@command-socket/node-client": "latest",
+    "@element-ts/krypton": "^0.3.3",
+    "@huskiesio/types": "^0.1.27",
+    "@types/mongodb": "latest",
+    "@types/ws": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "typescript": "latest",
+    "tslint": "latest",
+    "jest": "latest",
+    "@types/jest": "latest"
+  }
 }

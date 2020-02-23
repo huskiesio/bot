@@ -7,16 +7,17 @@
 import {IHCBotInfo} from "../types";
 import {HCBotInfoServer} from "./HCBotInfoServer";
 import {HCBotInfoMe} from "./HCBotInfoMe";
+import {Socket} from "../HuskyChatBot";
 
-export class HCBotInfo implements IHCBotInfo {
+export class HCBotInfo {
 
 	private readonly _me: HCBotInfoMe;
 	private readonly _server: HCBotInfoServer;
 
-	public constructor() {
+	public constructor(socket: Socket) {
 
-		this._me = new HCBotInfoMe();
-		this._server = new HCBotInfoServer();
+		this._me = new HCBotInfoMe(socket);
+		this._server = new HCBotInfoServer(socket);
 
 	}
 
