@@ -7,12 +7,13 @@
 
 import {HCBotInfo} from "./info/HCBotInfo";
 import {HCBotDirectory} from "./directory/HCBotDirectory";
-import {HCBotChat} from "./chat/HCBotChat";
+import {HCBotChat, HCBotChatOnReceivedParam, HCBotChatOnSentParam} from "./chat/HCBotChat";
 import {CommandSocket} from "@command-socket/node-client";
 import {HCCSBotCommands, HCCSServerCommands} from "@huskiesio/types";
 import {CommandRegistry} from "@command-socket/core";
 import {KrRSA} from "@element-ts/krypton";
 import {HCBotKeyManager} from "./managers/HCBotKeyManager";
+import {HCBotFileManager} from "./managers/HCBotFileManager";
 
 interface SocketProps {}
 
@@ -26,7 +27,7 @@ export class HuskyChatBot {
 	private readonly socket: Socket;
 	private readonly deviceKeyManager: HCBotKeyManager;
 	private readonly userKeyManager: HCBotKeyManager;
-	private static readonly SOCKET_ADDRESS: string = "ws://localhost:3000";
+	public static SOCKET_ADDRESS: string = "ws://localhost:3000";
 
 	private constructor(socket: Socket) {
 
@@ -34,9 +35,44 @@ export class HuskyChatBot {
 		this.userKeyManager = new HCBotKeyManager("user");
 
 		this.socket = socket;
-		this._chat = new HCBotChat(socket);
+		this._chat = new HCBotChat(socket, this.userKeyManager);
 		this._directory = new HCBotDirectory(socket);
 		this._info = new HCBotInfo(socket);
+
+	}
+
+	private async handleChatMessageReceived(message: HCBotChatOnReceivedParam): Promise<boolean> {
+
+		const messagePayload: string = message.payload;
+		const messagePayloadData: Buffer = Buffer.from(messagePayload, "hex");
+		const privateKey: Buffer = this.userKeyManager.private();
+
+		const messageDecrypted: Buffer = KrRSA.decrypt(messagePayloadData, privateKey);
+		const messageDecryptedString: string = messageDecrypted.toString("utf8");
+
+		console.log(messageDecryptedString);
+
+		message.payload = messageDecryptedString;
+
+		await this._chat.handleChatMessageReceived(message);
+		return true;
+	}
+
+	private async handleChatMessageSent(message: HCBotChatOnSentParam): Promise<boolean> {
+
+		const messagePayload: string = message.payload;
+		const messagePayloadData: Buffer = Buffer.from(messagePayload, "hex");
+		const privateKey: Buffer = this.userKeyManager.private();
+
+		const messageDecrypted: Buffer = KrRSA.decrypt(messagePayloadData, privateKey);
+		const messageDecryptedString: string = messageDecrypted.toString("utf8");
+
+		console.log(messageDecryptedString);
+
+		message.payload = messageDecryptedString;
+
+		await this._chat.handleChatMessageSent(message);
+		return true;
 
 	}
 
@@ -47,12 +83,12 @@ export class HuskyChatBot {
 
 	private static async init(): Promise<HuskyChatBot> {
 
-		const commandRegistry: CommandRegistry = new CommandRegistry<HCCSBotCommands>();
+		const commandRegistry: CommandRegistry<HCCSBotCommands> = new CommandRegistry<HCCSBotCommands>();
 		const socket: Socket = await CommandSocket.create(this.SOCKET_ADDRESS, commandRegistry);
 		const bot: HuskyChatBot = new HuskyChatBot(socket);
 
-		commandRegistry.addCommand("chat message received", bot._chat.handleChatMessageReceived);
-		commandRegistry.addCommand("chat message sent", bot._chat.handleChatMessageSent);
+		commandRegistry.addCommand("chat message received", bot.handleChatMessageReceived);
+		commandRegistry.addCommand("chat message sent", bot.handleChatMessageSent);
 		commandRegistry.addCommand("thread updated", bot._chat.handleThreadUpdated);
 
 		return bot;
@@ -78,17 +114,24 @@ export class HuskyChatBot {
 
 	}
 
-	public static async signUpFinish(code: string, token: string): Promise<string> {
+	public static async signUpFinish(code: string, token: string): Promise<void> {
 
 		const socket: Socket = await CommandSocket.create<HCCSBotCommands, HCCSServerCommands, SocketProps>(this.SOCKET_ADDRESS);
-		return await socket.invoke("signUp finish", {code, token});
+		const deviceId: string = await socket.invoke("signUp finish", {code, token});
+
+		const deviceIdData: Buffer = Buffer.from(deviceId);
+		HCBotFileManager.save("deviceId", deviceIdData);
 
 	}
 
 
-	public static async signIn(username: string, password: string, deviceId: string): Promise<HuskyChatBot> {
+	public static async signIn(username: string, password: string): Promise<HuskyChatBot> {
 
 		const bot: HuskyChatBot = await HuskyChatBot.init();
+
+		const deviceIdData: Buffer | undefined = HCBotFileManager.get("deviceId");
+		if (deviceIdData === undefined) throw new Error("deviceId file not found. Sign up again...");
+		const deviceId: string = deviceIdData.toString("hex");
 
 		const dataToSignString: string = await bot.socket.invoke("signIn start", {username, password, deviceId});
 		const dataToSign: Buffer = Buffer.from(dataToSignString, "hex");

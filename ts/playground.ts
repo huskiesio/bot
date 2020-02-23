@@ -18,11 +18,9 @@ import {HuskyChatBot} from "./index";
 	// });
 	// console.log(token);
 
-	// const deviceId: string = await HuskyChatBot.signUpFinish("B2A85D", "5e5238f32f9f3078c5a9301a");
-	// console.log(deviceId);
+	// await HuskyChatBot.signUpFinish("B2A85D", "5e5238f32f9f3078c5a9301a");
 
-	const deviceId: string = "5e5239092f9f3078c5a9301c";
-	const bot: HuskyChatBot = await HuskyChatBot.signIn("ejcobb", "alpine", deviceId);
+	const bot: HuskyChatBot = await HuskyChatBot.signIn("ejcobb", "alpine");
 	console.log(await bot.info().me().firstName());
 	console.log(await bot.info().me().lastName());
 	console.log(await bot.info().me().userId());

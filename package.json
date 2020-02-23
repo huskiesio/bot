@@ -1,6 +1,6 @@
 {
   "name": "@huskiesio/bot",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "description": "A package to build a bot for the huskies.io chat application.",
   "keywords": [],
   "main": "js/index",
