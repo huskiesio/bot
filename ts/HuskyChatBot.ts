@@ -26,6 +26,7 @@ export class HuskyChatBot {
 	private readonly socket: Socket;
 	private readonly deviceKeyManager: HCBotKeyManager;
 	private readonly userKeyManager: HCBotKeyManager;
+	private static readonly SOCKET_ADDRESS: string = "ws://localhost:3000";
 
 	private constructor(socket: Socket) {
 
@@ -47,7 +48,7 @@ export class HuskyChatBot {
 	private static async init(): Promise<HuskyChatBot> {
 
 		const commandRegistry: CommandRegistry = new CommandRegistry<HCCSBotCommands>();
-		const socket: Socket = await CommandSocket.create("ws://localhost:3000", commandRegistry);
+		const socket: Socket = await CommandSocket.create(this.SOCKET_ADDRESS, commandRegistry);
 		const bot: HuskyChatBot = new HuskyChatBot(socket);
 
 		commandRegistry.addCommand("chat message received", bot._chat.handleChatMessageReceived);
@@ -60,7 +61,7 @@ export class HuskyChatBot {
 
 	public static async signUpStart(obj: {email: string, password: string, firstName: string, lastName: string, deviceName: string}): Promise<string> {
 
-		const socket: Socket = await CommandSocket.create<HCCSBotCommands, HCCSServerCommands, SocketProps>("ws://localhost:3000");
+		const socket: Socket = await CommandSocket.create<HCCSBotCommands, HCCSServerCommands, SocketProps>(this.SOCKET_ADDRESS);
 
 		const deviceKeyManager: HCBotKeyManager = new HCBotKeyManager("device");
 		const userKeyManager: HCBotKeyManager = new HCBotKeyManager("user");
@@ -79,7 +80,7 @@ export class HuskyChatBot {
 
 	public static async signUpFinish(code: string, token: string): Promise<string> {
 
-		const socket: Socket = await CommandSocket.create<HCCSBotCommands, HCCSServerCommands, SocketProps>("ws://localhost:3000");
+		const socket: Socket = await CommandSocket.create<HCCSBotCommands, HCCSServerCommands, SocketProps>(this.SOCKET_ADDRESS);
 		return await socket.invoke("signUp finish", {code, token});
 
 	}
@@ -93,10 +94,7 @@ export class HuskyChatBot {
 		const dataToSign: Buffer = Buffer.from(dataToSignString, "hex");
 		const signedData: Buffer = KrRSA.sign(dataToSign, bot.deviceKeyManager.private());
 		const signedDataString: string = signedData.toString("hex");
-
-		console.log("about to invoke finish");
-		console.log(await bot.socket.rawRequest("signIn finish", {signature: signedDataString}));
-		console.log("done with invodking finish");
+		await bot.socket.invoke("signIn finish", {signature: signedDataString});
 
 		return bot;
 

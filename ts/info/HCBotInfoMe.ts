@@ -30,7 +30,7 @@ export class HCBotInfoMe {
 
 	private async fetchSelf(): Promise<void> {
 
-		const me: IHCAPIUser = await this.socket.invoke("user me", undefined);
+		const me: IHCAPIUser = await this.socket.invoke("user me", true);
 
 		this._firstName = me.firstName;
 		this._lastName = me.lastName;
